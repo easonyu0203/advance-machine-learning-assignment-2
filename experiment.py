@@ -17,7 +17,7 @@ import pandas as pd
 class ExperimentConfig:
     """Class to hold and initialize experiment parameters."""
     def __init__(self, model_name: str, dataset_name: str, learning_rate: float, batch_size: int, num_epochs: int):
-        self.device = "mps"  # or torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = "cpu"  # or torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model_name = model_name
         self.batch_size = batch_size
         self.num_epochs = num_epochs
@@ -48,9 +48,9 @@ class TrainEvalExperiment:
         self.config = config
         # Initialize metrics
         self.metrics = {
-            "train": {"accuracy": Accuracy(task="multiclass", num_classes=3).to(self.config.device), "precision": Precision(task="multiclass", num_classes=3).to(self.config.device), "recall": Recall(task="multiclass", num_classes=3).to(self.config.device), "f1": F1Score(task="multiclass", num_classes=3).to(self.config.device)},
-            "val": {"accuracy": Accuracy(task="multiclass", num_classes=3).to(self.config.device), "precision": Precision(task="multiclass", num_classes=3).to(self.config.device), "recall": Recall(task="multiclass", num_classes=3).to(self.config.device), "f1": F1Score(task="multiclass", num_classes=3).to(self.config.device)},
-            "test": {"accuracy": Accuracy(task="multiclass", num_classes=3).to(self.config.device), "precision": Precision(task="multiclass", num_classes=3).to(self.config.device), "recall": Recall(task="multiclass", num_classes=3).to(self.config.device), "f1": F1Score(task="multiclass", num_classes=3).to(self.config.device)}
+            "train": {"accuracy": Accuracy(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "precision": Precision(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "recall": Recall(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "f1": F1Score(task="multiclass", num_classes=3, average='weighted').to(self.config.device)},  
+            "val": {"accuracy": Accuracy(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "precision": Precision(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "recall": Recall(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "f1": F1Score(task="multiclass", num_classes=3, average='weighted').to(self.config.device)},  
+            "test": {"accuracy": Accuracy(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "precision": Precision(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "recall": Recall(task="multiclass", num_classes=3, average='weighted').to(self.config.device), "f1": F1Score(task="multiclass", num_classes=3, average='weighted').to(self.config.device)}  
         }
         self.metric_values = {key: {metric: [] for metric in self.metrics[key]} for key in ['train', 'test']}
 
