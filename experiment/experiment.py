@@ -2,7 +2,7 @@ from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 
 from experiment.config import ExperimentConfig
-from train_eval import train, evaluate
+from trainer.train_eval import train, evaluate
 from typing import Dict
 from torchmetrics import F1Score, Precision, Recall, Accuracy
 import pandas as pd
@@ -33,7 +33,7 @@ class ModelTrainingExperiment:
         self.metric_values = {key: {metric: [] for metric in self.metrics[key]} for key in ['train', 'test']}
 
     def get_writer_name(self, iteration: int) -> str:
-        """Generate a unique name for TensorBoard writer based on experiment parameters and iteration."""
+        """Generate a unique name for TensorBoard writer based on trainer parameters and iteration."""
         model_name = self.config.model.__class__.__name__
         dataset_name = self.config.dataset_name
         criterion_name = self.config.criterion.__class__.__name__

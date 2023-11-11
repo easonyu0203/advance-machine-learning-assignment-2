@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+
 
 def conv_bn(in_channels: int, out_channels: int, kernel_size: int = 3, padding: int = 1) -> nn.Sequential:
     """
@@ -91,22 +91,3 @@ class GenericCNN(nn.Module):
         x = self.output_layer(x)
         return x
 
-def get_model(model_type: str) -> GenericCNN:
-    """
-    Factory function to get the specified CNN model.
-
-    Args:
-    model_type (str): Type of model to create ('mnist' or 'cifar').
-
-    Returns:
-    GenericCNN: Instantiated CNN model for the specified type.
-    
-    Raises:
-    ValueError: If the model_type is not 'mnist' or 'cifar'.
-    """
-    if model_type.lower() == "mnist":
-        return GenericCNN(input_channels=1, conv_layers=[32, 64], fc_layers=[128], num_classes=3)
-    elif model_type.lower() == "cifar":
-        return GenericCNN(input_channels=3, conv_layers=[64, 128, 256], fc_layers=[256, 256], num_classes=3)
-    else:
-        raise ValueError("Invalid model type. Please choose 'mnist' or 'cifar'.")

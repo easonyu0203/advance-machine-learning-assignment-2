@@ -48,9 +48,9 @@ cifar_transform = transforms.Compose([
 DatasetFile = namedtuple('DatasetFile', ['X_train', 'y_train', 'X_test', 'y_test'])
 
 # Dataset file paths
-CIFAR_DATASET_PATH = "./datasets/CIFAR.npz"
-MNIST_DATASET5_PATH = "./datasets/FashionMNIST0.5.npz"
-MNIST_DATASET6_PATH = "./datasets/FashionMNIST0.6.npz"
+CIFAR_DATASET_PATH = "../datasets/CIFAR.npz"
+MNIST_DATASET5_PATH = "../datasets/FashionMNIST0.5.npz"
+MNIST_DATASET6_PATH = "../datasets/FashionMNIST0.6.npz"
 
 def load_dataset_file(path: str) -> DatasetFile:
     """

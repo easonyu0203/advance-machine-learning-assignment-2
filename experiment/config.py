@@ -4,13 +4,13 @@ import torch
 from torch import optim as optim, nn as nn
 from torch.utils.data import DataLoader, random_split
 
-from data import create_dataset
-from gce_loss import GCELoss
+from trainer.data import create_dataset
+from loss_fn.gce_loss import GCELoss
 from model.model import get_model
 
 
 class ExperimentConfig:
-    """Class to hold and initialize experiment parameters."""
+    """Class to hold and initialize trainer parameters."""
 
     def __init__(self, model_name: str, dataset_name: str, learning_rate: float, loss_fn_name: str, batch_size: int,
                  num_epochs: int,

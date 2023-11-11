@@ -39,14 +39,26 @@ class NoiseAdaptationLayer(nn.Module):
         """
         # Apply softmax to ensure the rows of the transition matrix sum to 1
         T_normalized = torch.softmax(self.transition_matrix, dim=1)
-        return torch.matmul(T_normalized, p)
 
+        # Transpose p to match the shape for matmul and transpose the result back
+        adapted_p = torch.matmul(T_normalized, p.t()).t()
+        return adapted_p
+    
+    def get_transition_matrix(self) -> torch.Tensor:
+        """
+        Returns the transition matrix.
+
+        Returns:
+            torch.Tensor: The transition matrix.
+        """
+        return torch.softmax(self.transition_matrix, dim=1)
 
 
 class ClassifierWithNAL(nn.Module):
     """
     A classifier integrated with a Noise Adaptation Layer.
     """
+
     def __init__(self, base_model: nn.Module, num_classes: int, transition_matrix: torch.Tensor = None):
         """
         Initialize the Classifier with NAL.
