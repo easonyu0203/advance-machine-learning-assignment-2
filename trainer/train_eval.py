@@ -1,11 +1,8 @@
 import torch.optim as optim
 import torch
-from tqdm import tqdm
-import matplotlib.pyplot as plt
-from models import get_model
 import torch.nn as nn
-from typing import Tuple, Dict, List, Optional, Union
-from torch.utils.data import Dataset, DataLoader
+from typing import Tuple, Dict, Optional, Union
+from torch.utils.data import DataLoader
 
 
 def train(model: nn.Module, train_loader: DataLoader, criterion: nn.Module, optimizer: optim.Optimizer, device: str) -> Tuple[float, float]:
