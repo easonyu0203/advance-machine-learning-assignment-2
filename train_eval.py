@@ -79,7 +79,13 @@ def evaluate(model: nn.Module, test_loader: DataLoader, criterion: nn.Module, de
 
     avg_loss = total_loss / len(test_loader)
     if metrics is not None:
-        metrics_results = {name: metric.compute().item() for name, metric in metrics.items()}
+        metrics_results = {}
+        for name, metric in metrics.items():
+            computed_metric = metric.compute()
+            if computed_metric.ndim == 0:  # Scalar value
+                metrics_results[name] = computed_metric.item()
+            else:  # Non-scalar tensor
+                metrics_results[name] = {index: value.item() for index, value in enumerate(computed_metric)}
         return metrics_results
     else:
         accuracy = 100. * total_correct / total_samples
