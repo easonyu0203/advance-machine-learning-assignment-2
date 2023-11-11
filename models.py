@@ -89,24 +89,24 @@ class GenericCNN(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc_layers(x)
         x = self.output_layer(x)
-        return F.log_softmax(x, dim=1)
+        return x
 
 def get_model(model_type: str) -> GenericCNN:
     """
     Factory function to get the specified CNN model.
 
     Args:
-    model_type (str): Type of model to create ('fashion' or 'cifar').
+    model_type (str): Type of model to create ('mnist' or 'cifar').
 
     Returns:
     GenericCNN: Instantiated CNN model for the specified type.
     
     Raises:
-    ValueError: If the model_type is not 'fashion' or 'cifar'.
+    ValueError: If the model_type is not 'mnist' or 'cifar'.
     """
-    if model_type.lower() == "fashion":
+    if model_type.lower() == "mnist":
         return GenericCNN(input_channels=1, conv_layers=[32, 64], fc_layers=[128], num_classes=3)
     elif model_type.lower() == "cifar":
         return GenericCNN(input_channels=3, conv_layers=[64, 128, 256], fc_layers=[256, 256], num_classes=3)
     else:
-        raise ValueError("Invalid model type. Please choose 'fashion' or 'cifar'.")
+        raise ValueError("Invalid model type. Please choose 'mnist' or 'cifar'.")
